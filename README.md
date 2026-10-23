@@ -9,9 +9,10 @@ your notebooks.
 
 https://github.com/user-attachments/assets/b48195c7-69cf-4129-b539-41faf1a52d10
 
-> **Status: pre-release.** LockPad passes its full automated test suite and has
-> been through AI-assisted security reviews and red-team attacks, but not a
-> third-party audit. See [Security reviews](#security-reviews).
+> **Not independently audited.** LockPad passes its full automated test suite
+> and a full manual test pass, and has been through AI-assisted security reviews
+> and red-team attacks, but not a third-party audit. See
+> [Security reviews](#security-reviews).
 
 ## Highlights
 
