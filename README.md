@@ -36,12 +36,12 @@ your notebooks.
 
 ## Download
 
-There is no release yet. When there is, download the zip from the
-[Releases](https://github.com/REPOZY/LockPad/releases) page, unzip it, and
-check it before you run it: in PowerShell, in the unzipped folder, run
-`Get-FileHash * -Algorithm SHA256` and compare every hash with `SHA256SUMS.txt`.
+Download the zip from the [Releases](https://github.com/REPOZY/LockPad/releases)
+page, unzip it, and check it before you run it: in PowerShell, in the unzipped
+`LockPad` folder, run `Get-FileHash * -Algorithm SHA256` and compare every hash
+with `SHA256SUMS.txt`.
 
-Until then, [build LockPad from source](CONTRIBUTING.md#building-lockpad).
+You can also [build LockPad from source](CONTRIBUTING.md#building-lockpad).
 
 **Requirements:** Windows 10 (version 1903 or later) or Windows 11. .NET
 Framework 4.8 is already part of Windows.
