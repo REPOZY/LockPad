@@ -117,7 +117,7 @@ about it is listed in [SECURITY.md](SECURITY.md#security-reviews) and
 ## License
 
 GNU General Public License, version 2 or later (GPL-2.0-or-later); see
-[LICENSE](LICENSE). LockPad includes KeePassLib, part of
+[LICENSE](LICENSE) and [NOTICE](NOTICE). LockPad includes KeePassLib, part of
 [KeePass Password Safe](https://keepass.info/), Copyright (C) 2003-2026 Dominik
 Reichl, under the same license. LockPad is not affiliated with or endorsed by
 the KeePass or KeePassXC projects.
