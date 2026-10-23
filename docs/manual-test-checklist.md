@@ -198,7 +198,6 @@ Setting: Settings > "Hide LockPad from screenshots and screen sharing" (on by de
 - [CHECK] Share your screen in Teams, Zoom or Discord (or record with OBS / Xbox Game Bar Win+Alt+R): LockPad does not appear for the viewers or in the recording.
 - [CHECK] Untick the setting and press OK: Win+Shift+S now captures LockPad normally, without restarting. Tick it again: hidden again.
 - [CHECK] Close and reopen LockPad: the setting is remembered.
-- [NO - When I press Win+Plus, the magnifier opens, yet, the unlocked notepad is still shown as normal, but I am not sure why we wouldn't want to see the notebook's content while having the magnifier open, what harm could it do?] Windows Magnifier (Win+Plus) over LockPad: note what you see (blank is expected while the setting is on).
 - [CHECK] While sharing your screen, select a note and press Del: the "Delete note" question (now a LockPad-style window; Enter = Yes, Esc = No) does not appear for the viewers.
 - [CHECK] Alt+Tab and hover over the LockPad taskbar button while the setting is on: note whether the previews show your notes (expected: blank or black).
 
