@@ -153,9 +153,7 @@ therefore cannot freeze LockPad with your notes on screen.
 - When LockPad runs inside Remote Desktop, a virtual machine or Citrix, the
   computer you connect from can still capture it. Virtual or wireless displays
   (Miracast, screen-extension apps) count as monitors and are not protected.
-- To take screenshots of LockPad yourself, turn it off in **Settings**. Windows
-  Magnifier still shows LockPad normally: it only enlarges your own screen and
-  records or sends nothing.
+- To take screenshots of LockPad yourself, turn it off in **Settings**.
 
 ## Files and paths
 
