@@ -7,9 +7,7 @@ Every notebook is a standard, encrypted **KDBX 4.1** file, the format of
 KeePass and KeePassXC. If LockPad ever stops working, KeePassXC still opens
 your notebooks.
 
-<!-- PROMO VIDEO: on github.com, edit this file and drag marketing/video/out/lockpad-promo.mp4 onto this spot.
-     GitHub uploads it and inserts a https://github.com/user-attachments/assets/... link; keep that link on its own
-     line (blank line above and below) so it plays inline. A video file committed to the repo does not play. -->
+https://github.com/user-attachments/assets/b48195c7-69cf-4129-b539-41faf1a52d10
 
 > **Status: pre-release.** LockPad passes its full automated test suite and has
 > been through AI-assisted security reviews and red-team attacks, but not a
