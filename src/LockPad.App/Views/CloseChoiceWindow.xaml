@@ -1,0 +1,22 @@
+<Window x:Class="LockPad.App.Views.CloseChoiceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Could not save" SizeToContent="Height" Width="460" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Icon="/LockPad;component/Assets/LockPad.ico"
+        Background="{DynamicResource WindowBackground}"
+        BorderBrush="{DynamicResource DialogBorder}" BorderThickness="1">
+    <!-- Shown when saving failed while closing. Cancel is both the default (Enter) and the cancel (Esc) button, and
+         closing the window answers Cancel too: the window then stays open and nothing is lost. -->
+    <StackPanel Margin="16">
+        <TextBlock x:Name="MessageText" Margin="0,0,0,16" TextWrapping="Wrap"
+                   Foreground="{DynamicResource EditorForeground}" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="SaveAsButton" Content="Save As..." MinWidth="90" Padding="8,2" Margin="0,0,8,0"
+                    Click="OnSaveAs" />
+            <Button x:Name="CloseWithoutSavingButton" Content="Close without saving" MinWidth="90" Padding="8,2"
+                    Margin="0,0,8,0" Click="OnCloseWithoutSaving" />
+            <Button x:Name="CancelButton" Content="Cancel" MinWidth="90" Padding="8,2" IsDefault="True" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</Window>

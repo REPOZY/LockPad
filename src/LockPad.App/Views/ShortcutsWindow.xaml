@@ -1,0 +1,22 @@
+<Window x:Class="LockPad.App.Views.ShortcutsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Keyboard shortcuts" SizeToContent="Height" Width="560" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Icon="/LockPad;component/Assets/LockPad.ico"
+        Background="{DynamicResource WindowBackground}"
+        BorderBrush="{DynamicResource DialogBorder}" BorderThickness="1">
+    <!-- Read-only list built from ShortcutTable (code-behind). Close is both the default and the cancel button, so
+         Enter and Esc close it. The window is never taller than the main window (FitInside): the list then scrolls
+         (mouse wheel, or the arrow, Page and Home/End keys anywhere in the window) and Close stays visible below it.
+         The ScrollViewer is not a tab stop: Tab only ever reaches Close. 560 wide (2026-10-21, was 480): wider than
+         the 480-wide unlock and create forms, so it covers them instead of leaving their edges showing (a test checks). -->
+    <DockPanel Margin="16">
+        <Button x:Name="CloseButton" DockPanel.Dock="Bottom" Content="Close" Width="80" HorizontalAlignment="Right"
+                Margin="0,16,0,0" IsDefault="True" IsCancel="True" />
+        <ScrollViewer x:Name="GroupsScroller" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                      Focusable="False">
+            <StackPanel x:Name="GroupsPanel" />
+        </ScrollViewer>
+    </DockPanel>
+</Window>

@@ -1,0 +1,21 @@
+<Window x:Class="LockPad.App.Views.ConfirmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Confirm" SizeToContent="Height" Width="420" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Icon="/LockPad;component/Assets/LockPad.ico"
+        Background="{DynamicResource WindowBackground}"
+        BorderBrush="{DynamicResource DialogBorder}" BorderThickness="1">
+    <!-- Ordinary Yes/No confirmations (Delete note). A LockPad window rather than a Win32 MessageBox, so it is hidden
+         from screen captures like every other LockPad window (the Delete text shows the note title). Yes is the default
+         (Enter), as in the MessageBox it replaces; No is the cancel button (Esc), and closing the window answers No. -->
+    <StackPanel Margin="16">
+        <TextBlock x:Name="MessageText" Margin="0,0,0,16" TextWrapping="Wrap"
+                   Foreground="{DynamicResource EditorForeground}" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="YesButton" Content="_Yes" MinWidth="80" Padding="8,2" Margin="0,0,8,0" IsDefault="True"
+                    Click="OnYes" />
+            <Button x:Name="NoButton" Content="_No" MinWidth="80" Padding="8,2" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</Window>

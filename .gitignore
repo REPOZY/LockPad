@@ -1,0 +1,17 @@
+# AI assistant artifacts
+project-map.md
+session-log.md
+
+bin/
+obj/
+.vs/
+*.user
+TestResults/
+
+# Release zips
+dist/
+context-snapshot.json
+
+# Marketing video (Remotion): dependencies and rendered output
+marketing/video/node_modules/
+marketing/video/out/

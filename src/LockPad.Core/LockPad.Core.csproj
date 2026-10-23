@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <AssemblyName>LockPad.Core</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Runtime.Serialization" />
+    <ProjectReference Include="..\..\lib\KeePassLib.csproj" />
+    <EmbeddedResource Include="..\..\lib\KeePassData\MostPopularPasswords.txt.gz" LogicalName="MostPopularPasswords.txt.gz" />
+    <InternalsVisibleTo Include="LockPad.Tests" />
+  </ItemGroup>
+</Project>

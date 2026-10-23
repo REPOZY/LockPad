@@ -1,0 +1,163 @@
+<UserControl x:Class="LockPad.App.Views.EditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style x:Key="Field" TargetType="TextBox">
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="Background" Value="{DynamicResource EditorBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource EditorForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        </Style>
+    </UserControl.Resources>
+
+    <!-- Every Copy/Cut from these TextBoxes is routed through the protected clipboard by TextBoxClipboardGuard.
+         Keyboard shortcuts are on MainWindow (they must keep working when focus leaves this view). -->
+
+    <!-- Ctrl+F (ApplicationCommands.Find) is handled by MainWindow, which calls ShowFind. -->
+
+    <!-- EditorContent is collapsed, and ObscuredPanel shown, once a lock is due but must wait (EditorViewModel.IsObscured):
+         for a dialog or a save in progress, for the sleep that follows, or for the next Tick when unsaved changes
+         are saved first (the save freezes the window for seconds). The note text, the list and the find bar are no
+         longer visible. -->
+    <Grid>
+        <Grid x:Name="EditorContent">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsObscured}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240" MinWidth="140" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MinWidth="200" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar: filter, notes list, note commands -->
+            <DockPanel Grid.Column="0" Margin="8" Background="{DynamicResource WindowBackground}">
+                <TextBlock DockPanel.Dock="Top" Text="Filter" Margin="0,0,0,4" Foreground="{DynamicResource MutedForeground}" />
+                <TextBox x:Name="FilterBox" DockPanel.Dock="Top" Style="{StaticResource Field}" Margin="0,0,0,8"
+                         Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" />
+                <!-- Two rows, so "Undo delete" fits the narrow sidebar. The tooltips name each shortcut (see
+                     ShortcutTable) and also show while a button is disabled. -->
+                <!-- ShowOnDisabled is set on each button, not through a local Button style: a style here would hide the
+                     themed button style (Themes/Controls.xaml). -->
+                <UniformGrid DockPanel.Dock="Bottom" Columns="2" Margin="0,8,0,0">
+                    <Button Content="New" Margin="0,0,4,4" Command="{Binding NewNoteCommand}" ToolTip="New note (Ctrl+N)"
+                            ToolTipService.ShowOnDisabled="True" />
+                    <Button Content="Rename" Margin="4,0,0,4" Command="{Binding RenameNoteCommand}" ToolTip="Rename note (F2)"
+                            ToolTipService.ShowOnDisabled="True" />
+                    <Button Content="Delete" Margin="0,4,4,0" Command="{Binding DeleteNoteCommand}" ToolTip="Delete note (Del)"
+                            ToolTipService.ShowOnDisabled="True" />
+                    <Button x:Name="UndoDeleteButton" Content="Undo delete" Margin="4,4,0,0" Command="{Binding UndoDeleteCommand}"
+                            ToolTip="Undo delete (Ctrl+Z in the notes list)" ToolTipService.ShowOnDisabled="True" />
+                </UniformGrid>
+                <!-- Del and Ctrl+Z act only while focus is in the list: Ctrl+Z in the editor and filter boxes keeps its
+                     normal text undo. -->
+                <ListBox x:Name="NotesList" ItemsSource="{Binding VisibleNotes}"
+                         SelectedItem="{Binding SelectedNote, Mode=TwoWay}"
+                         DisplayMemberPath="DisplayTitle"
+                         Background="{DynamicResource EditorBackground}"
+                         Foreground="{DynamicResource EditorForeground}"
+                         BorderBrush="{DynamicResource BorderBrush}">
+                    <ListBox.InputBindings>
+                        <KeyBinding Key="Delete" Command="{Binding DeleteNoteCommand}" />
+                        <KeyBinding Key="Z" Modifiers="Control" Command="{Binding UndoDeleteCommand}" />
+                    </ListBox.InputBindings>
+                </ListBox>
+            </DockPanel>
+
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch"
+                          ResizeBehavior="PreviousAndNext" Background="{DynamicResource BorderBrush}" Focusable="False" />
+
+            <!-- Editor with find bar -->
+            <DockPanel Grid.Column="2" Margin="8" Background="{DynamicResource WindowBackground}">
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8"
+                            Background="{DynamicResource PanelBackground}">
+                    <CheckBox x:Name="WordWrapToggle" Content="Word wrap" VerticalAlignment="Center" Margin="6,4"
+                              IsChecked="{Binding WordWrap, Mode=TwoWay}" ToolTip="Word wrap (Alt+Z)"
+                              Foreground="{DynamicResource EditorForeground}" />
+                </StackPanel>
+                <Grid x:Name="FindBar" DockPanel.Dock="Top" Margin="0,0,0,8" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Find" VerticalAlignment="Center" Margin="0,0,8,0"
+                               Foreground="{DynamicResource MutedForeground}" />
+                    <TextBox x:Name="FindBox" Grid.Column="1" Style="{StaticResource Field}"
+                             ToolTip="Enter: next match. Esc: close."
+                             PreviewKeyDown="OnFindBoxKeyDown" />
+                    <TextBlock x:Name="FindStatus" Grid.Column="2" VerticalAlignment="Center" Margin="8,0,0,0"
+                               Foreground="{DynamicResource MutedForeground}" />
+                </Grid>
+
+                <!-- The empty state lies over the (then empty and disabled) editor box while no note is selected. It
+                     is inside EditorContent, so it is hidden with the notes while the editor is obscured. -->
+                <Grid>
+                    <TextBox x:Name="Editor"
+                             Text="{Binding EditorText, UpdateSourceTrigger=PropertyChanged}"
+                             IsReadOnly="{Binding IsReadOnly, Mode=OneWay}"
+                             IsEnabled="{Binding HasSelection, Mode=OneWay}"
+                             FontFamily="Cascadia Mono, Consolas"
+                             FontSize="{Binding FontSize, Mode=OneWay}"
+                             AcceptsReturn="True" AcceptsTab="True"
+                             SpellCheck.IsEnabled="False"
+                             IsInactiveSelectionHighlightEnabled="True"
+                             SelectionBrush="{DynamicResource EditorSelectionBrush}"
+                             HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                             Padding="4"
+                             Background="{DynamicResource EditorBackground}"
+                             Foreground="{DynamicResource EditorForeground}"
+                             BorderBrush="{DynamicResource BorderBrush}"
+                             PreviewMouseWheel="OnEditorMouseWheel">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="TextWrapping" Value="NoWrap" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding WordWrap}" Value="True">
+                                        <Setter Property="TextWrapping" Value="Wrap" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <TextBlock x:Name="EmptyStateText" Text="{Binding EmptyStateText}" Margin="16"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                               TextWrapping="Wrap" IsHitTestVisible="False"
+                               Foreground="{DynamicResource MutedForeground}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding EmptyStateText}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+            </DockPanel>
+        </Grid>
+
+        <Border x:Name="ObscuredPanel" Background="{DynamicResource WindowBackground}">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsObscured}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <TextBlock x:Name="ObscuredText" Text="Locking. If a LockPad dialog is open, close it to finish."
+                       HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="16"
+                       Foreground="{DynamicResource EditorForeground}" />
+        </Border>
+    </Grid>
+</UserControl>

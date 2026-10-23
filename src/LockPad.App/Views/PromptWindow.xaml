@@ -1,0 +1,24 @@
+<Window x:Class="LockPad.App.Views.PromptWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Prompt" SizeToContent="Height" Width="360" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Icon="/LockPad;component/Assets/LockPad.ico"
+        Background="{DynamicResource WindowBackground}"
+        BorderBrush="{DynamicResource DialogBorder}" BorderThickness="1">
+    <StackPanel Margin="16">
+        <TextBlock x:Name="LabelText" Margin="0,0,0,6" Foreground="{DynamicResource EditorForeground}" />
+        <TextBox x:Name="ValueBox" Margin="0,0,0,6" Padding="2"
+                 Background="{DynamicResource EditorBackground}"
+                 Foreground="{DynamicResource EditorForeground}" />
+        <!-- This prompt names notes (New note, Rename): titles are shown unprotected in the list and in messages. -->
+        <TextBlock x:Name="HintText" Margin="0,0,0,12" TextWrapping="Wrap"
+                   Foreground="{DynamicResource MutedForeground}"
+                   Text="Titles are visible in the notes list and in messages. Don't put passwords or other secrets in a title." />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="OkButton" Content="OK" Width="80" IsDefault="True" Margin="0,0,8,0" Click="OnOk"
+                    Style="{DynamicResource PrimaryButton}" />
+            <Button Content="Cancel" Width="80" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</Window>

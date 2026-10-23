@@ -1,0 +1,2 @@
+# Intentionally empty: its presence stops MSBuild from reading a Directory.Build.rsp from a folder above the
+# repository. RepositoryGuardTests allows comments only.

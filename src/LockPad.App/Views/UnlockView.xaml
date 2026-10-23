@@ -1,0 +1,148 @@
+<UserControl x:Class="LockPad.App.Views.UnlockView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource EditorForeground}" />
+            <Setter Property="Margin" Value="0,12,0,4" />
+        </Style>
+        <Style x:Key="Field" TargetType="TextBox">
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="Background" Value="{DynamicResource EditorBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource EditorForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
+        <StackPanel Width="480" Margin="24" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Unlock notebook" FontSize="20" Foreground="{DynamicResource EditorForeground}" />
+
+            <!-- Held-notebook banner: unsaved changes are kept in memory until this notebook is unlocked again. -->
+            <Border Margin="0,12,0,0" Padding="8" Background="{DynamicResource WarningBackground}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding HeldWarning}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <TextBlock Text="{Binding HeldWarning}" TextWrapping="Wrap" Foreground="{DynamicResource EditorForeground}" />
+            </Border>
+
+            <StackPanel>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+
+                <TextBlock x:Name="NotebookPathLabel" Text="Notebook file" Style="{StaticResource FieldLabel}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!-- Outline when the error belongs to this box. An outer border, because the TextBox template
+                         replaces its own border brush while it has focus, and the box is focused on error. -->
+                    <Border x:Name="NotebookPathBorder" Grid.Column="0" Margin="-2" BorderThickness="2">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="BorderBrush" Value="{x:Null}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ErrorField}" Value="NotebookPath">
+                                        <Setter Property="BorderBrush" Value="{DynamicResource ErrorForeground}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <TextBox x:Name="NotebookPathBox" Style="{StaticResource Field}"
+                                 Text="{Binding NotebookPath, UpdateSourceTrigger=PropertyChanged}"
+                                 IsReadOnly="{Binding HasHeldNotebook, Mode=OneWay}" />
+                    </Border>
+                    <Button x:Name="BrowseNotebookButton" Grid.Column="1" Margin="8,0,0,0" MinWidth="120"
+                            Content="Browse notebook&#x2026;" Command="{Binding BrowseNotebookCommand}" />
+                </Grid>
+
+                <TextBlock Text="Master password" Style="{StaticResource FieldLabel}" />
+                <PasswordBox x:Name="PasswordInput" MaxLength="0" Padding="2"
+                             Background="{DynamicResource EditorBackground}"
+                             Foreground="{DynamicResource EditorForeground}"
+                             BorderBrush="{DynamicResource BorderBrush}"
+                             KeyDown="OnPasswordKeyDown" />
+
+                <TextBlock x:Name="KeyFilePathLabel" Text="Key file (optional)" Style="{StaticResource FieldLabel}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="KeyFilePathBorder" Grid.Column="0" Margin="-2" BorderThickness="2">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="BorderBrush" Value="{x:Null}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ErrorField}" Value="KeyFilePath">
+                                        <Setter Property="BorderBrush" Value="{DynamicResource ErrorForeground}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <TextBox x:Name="KeyFilePathBox" Style="{StaticResource Field}"
+                                 Text="{Binding KeyFilePath, UpdateSourceTrigger=PropertyChanged}" />
+                    </Border>
+                    <Button x:Name="BrowseKeyFileButton" Grid.Column="1" Margin="8,0,0,0" MinWidth="120"
+                            Content="Browse key file&#x2026;" Command="{Binding BrowseKeyFileCommand}" />
+                </Grid>
+
+                <TextBlock Margin="0,12,0,0" Text="{Binding ErrorMessage}" TextWrapping="Wrap" Foreground="{DynamicResource ErrorForeground}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ErrorMessage}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <Grid Margin="0,16,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" MinWidth="110" Content="New notebook&#x2026;"
+                            Command="{Binding NewNotebookCommand}" />
+                    <Button x:Name="UnlockButton" Grid.Column="2" MinWidth="90" Content="Unlock" Click="OnUnlockClick"
+                            Style="{DynamicResource PrimaryButton}" />
+                </Grid>
+            </StackPanel>
+
+            <TextBlock Margin="0,12,0,0" Text="Unlocking&#x2026;" Foreground="{DynamicResource MutedForeground}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <!-- Not during the back-off delay: the countdown message is shown instead. -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsBusy}" Value="True" />
+                                    <Condition Binding="{Binding IsWaiting}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Visibility" Value="Visible" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
