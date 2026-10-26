@@ -193,5 +193,5 @@ afterwards; the notebook itself stays encrypted wherever it is.
    title, and its Notes field holds the text.
 
 You can edit notes in KeePassXC and keep using the file in LockPad afterwards.
-The automated tests check that LockPad and KeePassXC 2.7.12 can each read and
+The automated tests check that LockPad and KeePassXC 2.8.0 can each read and
 save the other's changes.
