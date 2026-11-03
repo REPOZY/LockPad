@@ -10,7 +10,10 @@ your notebooks.
 
 [https://github.com/user-attachments/assets/9b45dbe6-7536-444e-b057-dd4944249b08](https://github.com/user-attachments/assets/9b45dbe6-7536-444e-b057-dd4944249b08)
 
-[![Downloads](https://img.shields.io/github/downloads/REPOZY/LockPad/total)](https://github.com/REPOZY/LockPad/releases)
+[![Release](https://img.shields.io/github/v/release/REPOZY/LockPad?style=for-the-badge)](https://github.com/REPOZY/LockPad/releases)
+[![Downloads](https://img.shields.io/github/downloads/REPOZY/LockPad/total?style=for-the-badge&logo=github&color=2ea44f)](https://github.com/REPOZY/LockPad/releases)
+[![Stars](https://img.shields.io/github/stars/REPOZY/LockPad?style=for-the-badge&logo=github)](https://github.com/REPOZY/LockPad/stargazers)
+[![License](https://img.shields.io/github/license/REPOZY/LockPad?style=for-the-badge)](LICENSE)
 
 > **Not independently audited.** LockPad passes its full automated test suite
 > and a full manual test pass, and has been through AI-assisted security reviews
