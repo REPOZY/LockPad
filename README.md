@@ -7,31 +7,35 @@ Every notebook is a standard, encrypted **KDBX 4.1** file, the format of
 KeePass and KeePassXC. If LockPad ever stops working, KeePassXC still opens
 your notebooks.
 
-https://github.com/user-attachments/assets/9b45dbe6-7536-444e-b057-dd4944249b08
+[https://github.com/user-attachments/assets/9b45dbe6-7536-444e-b057-dd4944249b08](https://github.com/user-attachments/assets/9b45dbe6-7536-444e-b057-dd4944249b08)
 
 > **Not independently audited.** LockPad passes its full automated test suite
 > and a full manual test pass, and has been through AI-assisted security reviews
 > and red-team attacks, but not a third-party audit. See
 > [Security reviews](#security-reviews).
 
+
+
 ## Highlights
 
 - **Strong, standard encryption.** AES-256 with Argon2id key derivation, through
-  the official, unmodified KeePass library.
+the official, unmodified KeePass library.
 - **Saving can't destroy your notebook.** Each save writes a new file, reads it
-  back to verify every note, and only then replaces the old one. The previous
-  version is kept as a backup.
+back to verify every note, and only then replaces the old one. The previous
+version is kept as a backup.
 - **Locks itself.** After 5 minutes without input (adjustable), when Windows
-  locks, and before sleep. Unsaved changes are saved first.
+locks, and before sleep. Unsaved changes are saved first.
 - **A careful clipboard.** Copied text stays out of Windows clipboard history
-  and the cloud clipboard, and is cleared after 20 seconds.
+and the cloud clipboard, and is cleared after 20 seconds.
 - **Hidden from screen captures.** Left out of screenshots, recordings and
-  screen sharing (best effort; see [SECURITY.md](SECURITY.md)).
+screen sharing (best effort; see [SECURITY.md](SECURITY.md)).
 - **Offline by design.** Never connects to the network: no cloud sync, no
-  updater, no telemetry, no plugins.
+updater, no telemetry, no plugins.
 - **Portable.** Four files in one folder. Runs from a USB stick; nothing to
-  install.
+install.
 - **Open source.** GPL-2.0-or-later.
+
+
 
 ## Download
 
@@ -39,23 +43,19 @@ Download the zip from the [Releases](https://github.com/REPOZY/LockPad/releases)
 page and check it before you run it:
 
 1. **Check the zip.** In PowerShell, in the folder you downloaded it to, run
-   `Get-FileHash LockPad-*.zip -Algorithm SHA256` and compare the hash with the
+  `Get-FileHash LockPad-*.zip -Algorithm SHA256` and compare the hash with the
    **Zip SHA-256** in the release notes. If they differ, do not unzip it.
-
    With the [GitHub CLI](https://cli.github.com/) you can instead check the zip
    against GitHub's signed record of the release, for example:
    `gh release verify-asset v1.0.0 LockPad-v1.0.0-adbee96-win-net48.zip -R REPOZY/LockPad`
-
 2. **Optional: check the files.** Unzip it, and in the `LockPad` folder run
-   `Get-FileHash * -Algorithm SHA256`. Each file listed in `SHA256SUMS.txt`
+  `Get-FileHash * -Algorithm SHA256`. Each file listed in `SHA256SUMS.txt`
    must have the hash shown there. This only catches a damaged unzip:
    `SHA256SUMS.txt` comes inside the same zip, so step 1 is the check that
    catches a changed download.
 
 LockPad releases are immutable: once published, a release's zip and tag cannot
-be changed, not even from the LockPad GitHub account. All these checks rely on
-GitHub, though: someone who took over that account could still publish a new
-release with a malicious zip and matching hashes.
+be changed, not even from the LockPad GitHub account.
 
 You can also [build LockPad from source](CONTRIBUTING.md#building-lockpad).
 
@@ -70,26 +70,28 @@ checking the hashes, choose **More info > Run anyway**.
 1. Start `LockPad.exe` and click **New notebook...**.
 2. Choose where to save it, for example `Documents\private.kdbx`.
 3. Choose a strong master password and type it twice. **Write it down and keep
-   it somewhere safe: nobody can recover a forgotten password.**
+  it somewhere safe: nobody can recover a forgotten password.**
 4. Click **Create**. Add notes with **New** (Ctrl+N) and type or paste into the
-   editor. Ctrl+S saves.
+  editor. Ctrl+S saves.
 5. **Keep copies** of your notebook on a second USB stick or drive. LockPad's
-   own backup only goes one save back.
+  own backup only goes one save back.
 
 Next time, LockPad remembers your notebook: type the password and press Enter.
 The [user guide](docs/user-guide.md) covers everything else.
 
 ## How it protects you
 
-| Area | What LockPad does |
-| --- | --- |
+
+| Area       | What LockPad does                                                                                          |
+| ---------- | ---------------------------------------------------------------------------------------------------------- |
 | Encryption | KDBX 4.1, AES-256, Argon2id (at least 64 MiB, tuned to about 1 s on your PC); enforced again on every save |
-| Saving | Verify-before-replace, one backup, asks before overwriting changes made by another program |
-| Locking | Idle timeout, Ctrl+L, Windows lock, sleep; saves first, and holds unsaved changes safely if that fails |
-| Clipboard | Excluded from history and cloud sync, cleared after a delay, on lock and on exit |
-| Screen | Hidden from screenshots, recordings and screen sharing (on by default) |
-| Files | Never writes to a file it did not create; KeePass databases, backups and linked files open read-only |
-| Crashes | Kept out of Windows crash reports, so notes do not end up in crash files |
+| Saving     | Verify-before-replace, one backup, asks before overwriting changes made by another program                 |
+| Locking    | Idle timeout, Ctrl+L, Windows lock, sleep; saves first, and holds unsaved changes safely if that fails     |
+| Clipboard  | Excluded from history and cloud sync, cleared after a delay, on lock and on exit                           |
+| Screen     | Hidden from screenshots, recordings and screen sharing (on by default)                                     |
+| Files      | Never writes to a file it did not create; KeePass databases, backups and linked files open read-only       |
+| Crashes    | Kept out of Windows crash reports, so notes do not end up in crash files                                   |
+
 
 The details are in [SECURITY.md](SECURITY.md).
 
@@ -101,7 +103,7 @@ No notepad can. In short:
 - **A forgotten master password or a lost key file.** There is no recovery.
 - **Note titles are not secret.** Never put a secret in a title.
 - **Windows can write memory to disk** (page file, hibernation, blue-screen
-  dumps). Turn on **BitLocker** to keep those encrypted.
+dumps). Turn on **BitLocker** to keep those encrypted.
 - **Losing your only copy.** Keep your own copies on a separate drive.
 
 The full list is in [SECURITY.md](SECURITY.md#what-lockpad-does-not-protect-against).
@@ -124,11 +126,13 @@ about it is listed in [SECURITY.md](SECURITY.md#security-reviews) and
 ## Documentation
 
 - [User guide](docs/user-guide.md): using LockPad, shortcuts, settings, files,
-  recovery.
+recovery.
 - [SECURITY.md](SECURITY.md): how your data is protected, the limits, the
-  reviews.
+reviews.
 - [CONTRIBUTING.md](CONTRIBUTING.md): building from source, tests, project
-  rules.
+rules.
+
+
 
 ## License
 
