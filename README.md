@@ -1,6 +1,5 @@
 # LockPad
 
-[![Downloads](https://img.shields.io/github/downloads/REPOZY/LockPad/total)](https://github.com/REPOZY/LockPad/releases)
 
 **An encrypted notepad for Windows, for the text you cannot afford to lose or
 leak:** seed phrases, private keys, PIN codes, passwords and recovery codes.
@@ -10,6 +9,8 @@ KeePass and KeePassXC. If LockPad ever stops working, KeePassXC still opens
 your notebooks.
 
 [https://github.com/user-attachments/assets/9b45dbe6-7536-444e-b057-dd4944249b08](https://github.com/user-attachments/assets/9b45dbe6-7536-444e-b057-dd4944249b08)
+
+[![Downloads](https://img.shields.io/github/downloads/REPOZY/LockPad/total)](https://github.com/REPOZY/LockPad/releases)
 
 > **Not independently audited.** LockPad passes its full automated test suite
 > and a full manual test pass, and has been through AI-assisted security reviews
