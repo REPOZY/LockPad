@@ -1,5 +1,7 @@
 # LockPad
 
+[![Downloads](https://img.shields.io/github/downloads/REPOZY/LockPad/total)](https://github.com/REPOZY/LockPad/releases)
+
 **An encrypted notepad for Windows, for the text you cannot afford to lose or
 leak:** seed phrases, private keys, PIN codes, passwords and recovery codes.
 
