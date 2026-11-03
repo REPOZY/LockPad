@@ -41,14 +41,21 @@ page and check it before you run it:
 1. **Check the zip.** In PowerShell, in the folder you downloaded it to, run
    `Get-FileHash LockPad-*.zip -Algorithm SHA256` and compare the hash with the
    **Zip SHA-256** in the release notes. If they differ, do not unzip it.
+
+   With the [GitHub CLI](https://cli.github.com/) you can instead check the zip
+   against GitHub's signed record of the release, for example:
+   `gh release verify-asset v1.0.0 LockPad-v1.0.0-adbee96-win-net48.zip -R REPOZY/LockPad`
+
 2. **Optional: check the files.** Unzip it, and in the `LockPad` folder run
    `Get-FileHash * -Algorithm SHA256`. Each file listed in `SHA256SUMS.txt`
    must have the hash shown there. This only catches a damaged unzip:
    `SHA256SUMS.txt` comes inside the same zip, so step 1 is the check that
    catches a changed download.
 
-Both hashes are published on GitHub, so they cannot protect you if the
-LockPad GitHub account itself is compromised.
+LockPad releases are immutable: once published, a release's zip and tag cannot
+be changed, not even from the LockPad GitHub account. All these checks rely on
+GitHub, though: someone who took over that account could still publish a new
+release with a malicious zip and matching hashes.
 
 You can also [build LockPad from source](CONTRIBUTING.md#building-lockpad).
 
