@@ -1,0 +1,28 @@
+{
+  "name": "lockpad-video",
+  "version": "1.0.0",
+  "description": "LockPad marketing video (Remotion)",
+  "private": true,
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "dev": "remotion studio",
+    "render": "remotion render LockPadPromo out/lockpad-promo.mp4",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.537",
+    "@remotion/google-fonts": "4.0.537",
+    "@remotion/transitions": "4.0.537",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.537"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  }
+}

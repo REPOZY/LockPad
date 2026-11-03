@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <Deterministic>true</Deterministic>
+    <!-- The compiler writes the build folder into every .exe/.dll (the .pdb path). Map the repository folder to a
+         neutral path so no local folder or user name ends up in a published file. -->
+    <PathMap>$(MSBuildThisFileDirectory)=/_/</PathMap>
+    <!-- Restore checks every package against the committed packages.lock.json files (content hashes). -->
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <!-- Restore fails if a package differs from the lock files. To change a package, restore with the force-evaluate option and commit the new lock files. -->
+    <RestoreLockedMode>true</RestoreLockedMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="[1.0.3]" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

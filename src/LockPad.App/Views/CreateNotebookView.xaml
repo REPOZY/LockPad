@@ -1,0 +1,166 @@
+<UserControl x:Class="LockPad.App.Views.CreateNotebookView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource EditorForeground}" />
+            <Setter Property="Margin" Value="0,12,0,4" />
+        </Style>
+        <Style x:Key="Field" TargetType="TextBox">
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="Background" Value="{DynamicResource EditorBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource EditorForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        </Style>
+        <Style x:Key="Secret" TargetType="PasswordBox">
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="MaxLength" Value="0" />
+            <Setter Property="Background" Value="{DynamicResource EditorBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource EditorForeground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
+        <StackPanel Width="480" Margin="24" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Create notebook" FontSize="20" Foreground="{DynamicResource EditorForeground}" />
+
+            <StackPanel>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+
+                <TextBlock x:Name="NotebookPathLabel" Text="Notebook file" Style="{StaticResource FieldLabel}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!-- Outline when the error belongs to this box. An outer border, because the TextBox template
+                         replaces its own border brush while it has focus, and the box is focused on error. -->
+                    <Border x:Name="NotebookPathBorder" Grid.Column="0" Margin="-2" BorderThickness="2">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="BorderBrush" Value="{x:Null}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ErrorField}" Value="NotebookPath">
+                                        <Setter Property="BorderBrush" Value="{DynamicResource ErrorForeground}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <TextBox x:Name="NotebookPathBox" Style="{StaticResource Field}"
+                                 Text="{Binding NotebookPath, UpdateSourceTrigger=PropertyChanged}" />
+                    </Border>
+                    <Button x:Name="BrowseNotebookButton" Grid.Column="1" Margin="8,0,0,0" MinWidth="120"
+                            Content="Browse notebook&#x2026;" Command="{Binding BrowseNotebookCommand}" />
+                </Grid>
+
+                <TextBlock Text="Master password" Style="{StaticResource FieldLabel}" />
+                <PasswordBox x:Name="PasswordInput" Style="{StaticResource Secret}" MaxLength="0"
+                             PasswordChanged="OnPasswordChanged" />
+                <!-- The strength meter: an empty track and a hint until a character is typed, then a fill coloured by the
+                     rating (StrengthMeter in Themes/Controls.xaml) and the rating text. -->
+                <ProgressBar x:Name="StrengthBar" Margin="0,6,0,0" Height="8" Minimum="0" Maximum="128"
+                             Value="{Binding StrengthBits, Mode=OneWay}" Style="{DynamicResource StrengthMeter}" />
+                <Grid Margin="0,4,0,0">
+                    <TextBlock x:Name="StrengthText" TextWrapping="Wrap" Foreground="{DynamicResource MutedForeground}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasPassword}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                        <Run Text="{Binding Strength, Mode=OneWay}" />
+                        <Run Text="{Binding StrengthBits, Mode=OneWay, StringFormat='({0} bits)'}" />
+                        <Run Text="{Binding StrengthWarning, Mode=OneWay}" />
+                    </TextBlock>
+                    <TextBlock x:Name="StrengthHint" Text="Type a password to see its strength." TextWrapping="Wrap"
+                               Foreground="{DynamicResource MutedForeground}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasPassword}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+
+                <TextBlock Text="Confirm password" Style="{StaticResource FieldLabel}" />
+                <PasswordBox x:Name="ConfirmInput" Style="{StaticResource Secret}" MaxLength="0" />
+
+                <TextBlock x:Name="KeyFilePathLabel" Text="Key file (optional)" Style="{StaticResource FieldLabel}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Border x:Name="KeyFilePathBorder" Grid.Column="0" Margin="-2" BorderThickness="2">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="BorderBrush" Value="{x:Null}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ErrorField}" Value="KeyFilePath">
+                                        <Setter Property="BorderBrush" Value="{DynamicResource ErrorForeground}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <TextBox x:Name="KeyFilePathBox" Style="{StaticResource Field}"
+                                 Text="{Binding KeyFilePath, UpdateSourceTrigger=PropertyChanged}" />
+                    </Border>
+                    <Button x:Name="BrowseKeyFileButton" Grid.Column="1" Margin="8,0,0,0" MinWidth="120"
+                            Content="Browse key file&#x2026;" Command="{Binding BrowseKeyFileCommand}" />
+                </Grid>
+                <CheckBox Margin="0,6,0,0" Content="Create a new key file at this location"
+                          Foreground="{DynamicResource EditorForeground}"
+                          IsChecked="{Binding CreateNewKeyFile}" />
+
+                <TextBlock Margin="0,12,0,0" Text="{Binding ErrorMessage}" TextWrapping="Wrap" Foreground="{DynamicResource ErrorForeground}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ErrorMessage}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <!-- The main action first, Cancel last (as in every other window). -->
+                <StackPanel Margin="0,16,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="CreateButton" MinWidth="90" Margin="0,0,8,0" Content="Create" Click="OnCreateClick"
+                            Style="{DynamicResource PrimaryButton}" />
+                    <Button x:Name="CancelButton" MinWidth="90" Content="Cancel" Command="{Binding CancelCommand}" />
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Margin="0,12,0,0" Text="Creating notebook&#x2026;" Foreground="{DynamicResource MutedForeground}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

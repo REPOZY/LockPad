@@ -1,0 +1,19 @@
+<Window x:Class="LockPad.App.Views.ConfirmDefaultNoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Confirm" SizeToContent="Height" Width="420" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Icon="/LockPad;component/Assets/LockPad.ico"
+        Background="{DynamicResource WindowBackground}"
+        BorderBrush="{DynamicResource DialogBorder}" BorderThickness="1">
+    <!-- Irreversible confirmations (discarding unsaved changes). No is both the default (Enter) and the cancel (Esc)
+         button, and closing the window also answers No. A Win32 Yes/No MessageBox cannot do this: it has no Esc. -->
+    <StackPanel Margin="16">
+        <TextBlock x:Name="MessageText" Margin="0,0,0,16" TextWrapping="Wrap"
+                   Foreground="{DynamicResource EditorForeground}" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="YesButton" Content="_Yes" MinWidth="80" Padding="8,2" Margin="0,0,8,0" Click="OnYes" />
+            <Button x:Name="NoButton" Content="_No" MinWidth="80" Padding="8,2" IsDefault="True" IsCancel="True" />
+        </StackPanel>
+    </StackPanel>
+</Window>

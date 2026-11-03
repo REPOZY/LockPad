@@ -1,0 +1,51 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="WindowBackground" Color="#FFF3F3F3" />
+    <SolidColorBrush x:Key="PanelBackground" Color="#FFE8E8E8" />
+    <SolidColorBrush x:Key="EditorBackground" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="EditorForeground" Color="#FF1B1B1B" />
+    <SolidColorBrush x:Key="AccentBrush" Color="#FF005A9E" />
+    <SolidColorBrush x:Key="BorderBrush" Color="#FFB5B5B5" />
+    <SolidColorBrush x:Key="MutedForeground" Color="#FF5C5C5C" />
+    <SolidColorBrush x:Key="ErrorForeground" Color="#FFB3261E" />
+    <SolidColorBrush x:Key="WarningBackground" Color="#FFFFF4CE" />
+    <!-- The editor's selection, also while it is unfocused (find); drawn at the TextBox's SelectionOpacity (0.4).
+         The system inactive brush (#F0F0F0) is invisible on the white editor. -->
+    <SolidColorBrush x:Key="EditorSelectionBrush" Color="#FF0063B1" />
+    <!-- The 1 px edge of every dialog: at least 3:1 against WindowBackground, PanelBackground and EditorBackground,
+         so a dialog never blends into the main window behind it. -->
+    <SolidColorBrush x:Key="DialogBorder" Color="#FF808080" />
+
+    <!-- Control templates (Themes/Controls.xaml). Text pairs meet 4.5:1, the focus rectangle and the meter fills 3:1
+         (ThemedControlsTests checks every pair). -->
+    <SolidColorBrush x:Key="TransparentBrush" Color="#00FFFFFF" />
+    <SolidColorBrush x:Key="ControlBackground" Color="#FFFDFDFD" />
+    <SolidColorBrush x:Key="ControlHoverBackground" Color="#FFE5F1FB" />
+    <SolidColorBrush x:Key="ControlPressedBackground" Color="#FFCCE4F7" />
+    <SolidColorBrush x:Key="ControlBorder" Color="#FF8A8A8A" />
+    <SolidColorBrush x:Key="ControlDisabledBackground" Color="#FFF0F0F0" />
+    <SolidColorBrush x:Key="ControlDisabledBorder" Color="#FFCCCCCC" />
+    <SolidColorBrush x:Key="DisabledForeground" Color="#FF636363" />
+    <SolidColorBrush x:Key="DefaultButtonBorder" Color="#FF005A9E" />
+    <SolidColorBrush x:Key="FocusBorderBrush" Color="#FF005A9E" />
+    <SolidColorBrush x:Key="PrimaryBackground" Color="#FF005A9E" />
+    <SolidColorBrush x:Key="PrimaryHoverBackground" Color="#FF004C87" />
+    <SolidColorBrush x:Key="PrimaryPressedBackground" Color="#FF003E6E" />
+    <SolidColorBrush x:Key="PrimaryForeground" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="PopupBackground" Color="#FFF9F9F9" />
+    <SolidColorBrush x:Key="PopupBorder" Color="#FF808080" />
+    <SolidColorBrush x:Key="HighlightBackground" Color="#FFCCE4F7" />
+    <SolidColorBrush x:Key="CheckMarkBrush" Color="#FF1B1B1B" />
+    <SolidColorBrush x:Key="ScrollBarTrack" Color="#FFF0F0F0" />
+    <SolidColorBrush x:Key="ScrollBarThumb" Color="#FF8A8A8A" />
+    <SolidColorBrush x:Key="ScrollBarThumbHover" Color="#FF5C5C5C" />
+    <SolidColorBrush x:Key="ScrollBarArrow" Color="#FF5C5C5C" />
+    <SolidColorBrush x:Key="ProgressTrack" Color="#FFE0E0E0" />
+    <SolidColorBrush x:Key="ProgressFill" Color="#FF005A9E" />
+    <SolidColorBrush x:Key="StrengthWeakBrush" Color="#FFB3261E" />
+    <SolidColorBrush x:Key="StrengthFairBrush" Color="#FF9A6700" />
+    <SolidColorBrush x:Key="StrengthStrongBrush" Color="#FF107C10" />
+    <SolidColorBrush x:Key="ToolTipBackground" Color="#FFF9F9F9" />
+    <SolidColorBrush x:Key="ToolTipForeground" Color="#FF1B1B1B" />
+    <SolidColorBrush x:Key="ToolTipBorder" Color="#FF808080" />
+</ResourceDictionary>

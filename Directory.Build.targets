@@ -1,0 +1,4 @@
+<Project>
+  <!-- Intentionally empty: its presence stops MSBuild from importing a Directory.Build.targets from a folder
+       above the repository. RepositoryGuardTests forbids adding code, imports or targets here. -->
+</Project>
