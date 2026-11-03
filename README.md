@@ -7,7 +7,7 @@ Every notebook is a standard, encrypted **KDBX 4.1** file, the format of
 KeePass and KeePassXC. If LockPad ever stops working, KeePassXC still opens
 your notebooks.
 
-https://github.com/user-attachments/assets/b48195c7-69cf-4129-b539-41faf1a52d10
+https://github.com/user-attachments/assets/9b45dbe6-7536-444e-b057-dd4944249b08
 
 > **Not independently audited.** LockPad passes its full automated test suite
 > and a full manual test pass, and has been through AI-assisted security reviews
